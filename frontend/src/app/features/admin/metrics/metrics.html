@@ -1,0 +1,91 @@
+<div class="metrics-page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">System Metrics</h1>
+      <p class="page-subtitle">API usage and performance statistics</p>
+    </div>
+    <button class="refresh-btn" (click)="load()" [disabled]="isLoading()">
+      {{ isLoading() ? '…' : '↺ Refresh' }}
+    </button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading">Loading metrics…</div>
+  } @else if (metrics(); as m) {
+    <!-- KPI row -->
+    <div class="kpis">
+      <div class="kpi-card">
+        <span class="kpi-card__label">Total API Calls</span>
+        <span class="kpi-card__value">{{ m.apiCalls | number }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-card__label">Avg Validation Time</span>
+        <span class="kpi-card__value">{{ m.avgValidationMs }} ms</span>
+      </div>
+      <div class="kpi-card kpi-card--accent">
+        <span class="kpi-card__label">Submissions This Week</span>
+        <span class="kpi-card__value">{{ m.currentWeekSubmissions }}</span>
+      </div>
+      <div class="kpi-card" [class.kpi-card--warn]="m.currentWeekViolations > 0">
+        <span class="kpi-card__label">Violations This Week</span>
+        <span class="kpi-card__value">{{ m.currentWeekViolations }}</span>
+      </div>
+    </div>
+
+    <!-- Tables row -->
+    <div class="tables-row">
+      <div class="metric-table">
+        <h3 class="metric-table__title">Top Submission Weeks</h3>
+        @if (topWeeks(m.submissionsPerWeek).length === 0) {
+          <p class="empty">No data yet.</p>
+        } @else {
+          <div class="metric-table__header">
+            <span>Week</span>
+            <span>Submissions</span>
+          </div>
+          @for (row of topWeeks(m.submissionsPerWeek); track row.week) {
+            <div class="metric-table__row">
+              <span class="metric-week">{{ row.week }}</span>
+              <span class="metric-count">{{ row.count }}</span>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="metric-table metric-table--violations">
+        <h3 class="metric-table__title">Top Violation Weeks</h3>
+        @if (topWeeks(m.violationsPerWeek).length === 0) {
+          <p class="empty">No violations recorded.</p>
+        } @else {
+          <div class="metric-table__header">
+            <span>Week</span>
+            <span>Violations</span>
+          </div>
+          @for (row of topWeeks(m.violationsPerWeek); track row.week) {
+            <div class="metric-table__row">
+              <span class="metric-week">{{ row.week }}</span>
+              <span class="metric-count metric-count--warn">{{ row.count }}</span>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- Raw stats -->
+    <div class="raw-stats">
+      <h3 class="raw-stats__title">Raw Counters</h3>
+      <div class="raw-stats__grid">
+        <div class="raw-stat">
+          <span class="raw-stat__key">Total Validations Run</span>
+          <span class="raw-stat__val">{{ m.validationCount }}</span>
+        </div>
+        <div class="raw-stat">
+          <span class="raw-stat__key">Total Validation Time</span>
+          <span class="raw-stat__val">{{ m.totalValidationMs }} ms</span>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="loading">No metrics available.</div>
+  }
+</div>

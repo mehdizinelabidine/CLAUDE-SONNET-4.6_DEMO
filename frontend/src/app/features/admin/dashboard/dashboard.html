@@ -1,0 +1,93 @@
+<div class="dashboard">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Admin Dashboard</h1>
+      <p class="page-subtitle">Team availability overview</p>
+    </div>
+    <div class="week-nav">
+      <button class="nav-btn" (click)="previousWeek()">‹</button>
+      <span class="week-label">{{ weekLabel() }}</span>
+      <button class="nav-btn" (click)="nextWeek()">›</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  @if (kpis(); as k) {
+    <div class="kpis">
+      <div class="kpi-card">
+        <span class="kpi-card__icon">🏢</span>
+        <span class="kpi-card__value">{{ k.totalOnsite }}</span>
+        <span class="kpi-card__label">On-Site Days</span>
+      </div>
+      <div class="kpi-card kpi-card--wfh">
+        <span class="kpi-card__icon">🏠</span>
+        <span class="kpi-card__value">{{ k.totalWfh }}</span>
+        <span class="kpi-card__label">WFH Days</span>
+      </div>
+      <div class="kpi-card kpi-card--leave">
+        <span class="kpi-card__icon">📋</span>
+        <span class="kpi-card__value">{{ k.totalLeave }}</span>
+        <span class="kpi-card__label">Leave Days</span>
+      </div>
+      <div class="kpi-card" [class.kpi-card--violation]="k.violationDays > 0">
+        <span class="kpi-card__icon">⚠️</span>
+        <span class="kpi-card__value">{{ k.violationDays }}</span>
+        <span class="kpi-card__label">Violation Days</span>
+      </div>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="loading">Loading dashboard…</div>
+  } @else if (dashboard(); as d) {
+    <!-- Daily table -->
+    <div class="day-table">
+      <div class="day-table__header">
+        <span>Date</span>
+        <span>On-Site</span>
+        <span>WFH</span>
+        <span>Leave</span>
+        <span>Bar</span>
+        <span>Status</span>
+      </div>
+
+      @for (day of d.days; track day.date) {
+        <div class="day-table__row" [class.day-table__row--violation]="hasViolation(day)">
+          <span class="day-date">{{ day.date }}</span>
+          <span class="count count--onsite">{{ day.onsiteCount }}</span>
+          <span class="count count--wfh">{{ day.wfhCount }}</span>
+          <span class="count count--leave">{{ day.leaveCount }}</span>
+          <div class="bar-cell">
+            <div class="bar">
+              <div class="bar__fill bar__fill--onsite" [style.width.%]="getOnsiteWidth(day)"></div>
+            </div>
+          </div>
+          <span>
+            @if (hasViolation(day)) {
+              <span class="badge badge--violation">⚠ Below min (need 8)</span>
+            } @else {
+              <span class="badge badge--ok">✓ OK</span>
+            }
+          </span>
+        </div>
+      }
+    </div>
+
+    <!-- Violations list -->
+    @if (d.totalViolationDays > 0) {
+      <div class="violations-panel">
+        <h3 class="violations-panel__title">Rule Violations</h3>
+        @for (day of d.days; track day.date) {
+          @if (day.violations.length > 0) {
+            <div class="violation-item">
+              <span class="violation-date">{{ day.date }}</span>
+              @for (v of day.violations; track v) {
+                <p class="violation-msg">{{ v }}</p>
+              }
+            </div>
+          }
+        }
+      </div>
+    }
+  }
+</div>

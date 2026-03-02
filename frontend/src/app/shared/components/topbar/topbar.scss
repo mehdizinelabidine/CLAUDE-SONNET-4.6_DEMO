@@ -1,0 +1,100 @@
+.topbar {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #e8e8ec;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__week-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__nav-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e0e0e6;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #f5f5f8;
+    }
+  }
+
+  &__week-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    min-width: 200px;
+    text-align: center;
+  }
+
+  &__today-btn {
+    padding: 6px 14px;
+    background: #ffc72c;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #f5bb20;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffc72c;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  &__user-role {
+    font-size: 11px;
+  }
+}

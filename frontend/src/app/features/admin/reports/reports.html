@@ -1,0 +1,81 @@
+<div class="reports-page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Reports</h1>
+      <p class="page-subtitle">Export timesheet data</p>
+    </div>
+  </div>
+
+  <div class="reports-card">
+    <h2 class="reports-card__title">Date Range</h2>
+
+    <!-- Quick ranges -->
+    <div class="quick-ranges">
+      <button class="quick-btn" (click)="quickRange(7)">Last 7 days</button>
+      <button class="quick-btn" (click)="quickRange(30)">Last 30 days</button>
+      <button class="quick-btn" (click)="quickRange(90)">Last 90 days</button>
+    </div>
+
+    <!-- Custom range -->
+    <div class="date-inputs">
+      <div class="date-field">
+        <label class="field-label">From</label>
+        <input
+          type="date"
+          class="date-input"
+          [value]="from()"
+          (change)="setFrom($any($event.target).value)"
+        />
+      </div>
+      <span class="date-sep">→</span>
+      <div class="date-field">
+        <label class="field-label">To</label>
+        <input
+          type="date"
+          class="date-input"
+          [value]="to()"
+          (change)="setTo($any($event.target).value)"
+        />
+      </div>
+    </div>
+
+    <!-- Export buttons -->
+    <div class="export-actions">
+      <button
+        class="export-btn export-btn--csv"
+        [disabled]="isExporting()"
+        (click)="exportCsv()"
+      >
+        ⬇ Export CSV
+      </button>
+      <button
+        class="export-btn export-btn--pdf"
+        [disabled]="isExporting()"
+        (click)="exportPdf()"
+      >
+        ⬇ Export PDF
+      </button>
+    </div>
+
+    <p class="reports-card__hint">
+      Reports will include all employee entries for the selected date range.
+    </p>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <span class="info-card__icon">📊</span>
+      <div>
+        <strong>CSV Export</strong>
+        <p>Flat file with employee name, date, status, and submission time. Importable into Excel.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <span class="info-card__icon">📄</span>
+      <div>
+        <strong>PDF Report</strong>
+        <p>Formatted report with daily breakdown, KPI summary, and violation highlights.</p>
+      </div>
+    </div>
+  </div>
+</div>

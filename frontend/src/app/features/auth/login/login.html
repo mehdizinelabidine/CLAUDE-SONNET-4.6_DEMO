@@ -1,0 +1,34 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-card__logo">⏱</div>
+    <h1 class="login-card__title">TimeSheet App</h1>
+    <p class="login-card__subtitle">Sign in to manage your timesheet</p>
+
+    @if (auth.isMockMode()) {
+      <div class="login-card__mock-banner">
+        ⚠️ Running in <strong>Mock Mode</strong> — no Clerk keys detected
+      </div>
+
+      <p class="login-card__hint">Select a user to continue:</p>
+
+      <div class="login-card__users">
+        @for (user of auth.mockUsers(); track user.id) {
+          <button
+            class="user-btn user-btn--{{ user.role }}"
+            (click)="loginAs(user.id)"
+          >
+            <div class="user-btn__avatar">{{ user.name[0] }}</div>
+            <div class="user-btn__info">
+              <span class="user-btn__name">{{ user.name }}</span>
+              <span class="user-btn__role">{{ user.role }}</span>
+            </div>
+          </button>
+        }
+      </div>
+    } @else {
+      <button class="btn-primary" (click)="auth.initialize()">
+        Sign in with Clerk
+      </button>
+    }
+  </div>
+</div>

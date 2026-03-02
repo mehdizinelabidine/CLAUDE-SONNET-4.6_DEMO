@@ -1,0 +1,79 @@
+<div class="weekly-grid">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Week</h1>
+      <p class="page-subtitle">{{ ts.weekLabel() }}</p>
+    </div>
+    <div class="header-actions">
+      <div class="wfh-counter">
+        <span class="wfh-counter__label">WFH remaining</span>
+        <span class="wfh-counter__value" [class.wfh-counter__value--zero]="ts.wfhRemaining() === 0">
+          {{ ts.wfhRemaining() }} / 3
+        </span>
+      </div>
+      @if (hasPending) {
+        <button
+          class="btn-submit"
+          [disabled]="ts.isSaving()"
+          (click)="submit()"
+        >
+          {{ ts.isSaving() ? 'Saving…' : 'Submit Week' }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Error banners -->
+  @if (ts.saveErrors().length > 0) {
+    <div class="error-banner">
+      <strong>Some entries could not be submitted:</strong>
+      @for (err of ts.saveErrors(); track err.date) {
+        <p>{{ err.date }}: {{ err.errors[0]?.message }}</p>
+      }
+    </div>
+  }
+
+  @if (ts.isLoading()) {
+    <div class="loading">Loading entries…</div>
+  } @else {
+    <div class="grid">
+      <!-- Day headers -->
+      @for (day of ts.weekDays(); track day.date) {
+        <div class="grid__header" [class.grid__header--today]="day.isToday" [class.grid__header--weekend]="day.isWeekend">
+          {{ day.label }}
+          @if (day.isToday) {
+            <span class="today-badge">Today</span>
+          }
+        </div>
+      }
+
+      <!-- Status cells -->
+      @for (day of ts.weekDays(); track day.date) {
+        <div
+          class="grid__cell"
+          [class.grid__cell--weekend]="day.isWeekend"
+          [class.grid__cell--submitted]="isSubmitted(day.date)"
+        >
+          @if (isSubmitted(day.date)) {
+            <div class="cell-submitted">
+              <app-status-chip [status]="getStatus(day.date)" />
+              <span class="cell-submitted__label">Submitted</span>
+            </div>
+          } @else {
+            <div class="cell-actions">
+              @for (opt of statusOptions; track opt.value) {
+                <button
+                  class="status-btn status-btn--{{ opt.value }}"
+                  [class.status-btn--active]="getStatus(day.date) === opt.value"
+                  (click)="selectStatus(day.date, opt.value)"
+                >
+                  {{ opt.label }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

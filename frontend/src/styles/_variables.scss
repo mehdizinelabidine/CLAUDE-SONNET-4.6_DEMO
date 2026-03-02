@@ -1,0 +1,49 @@
+// ── Color palette ────────────────────────────────────────────────────────────
+$color-bg: #f7f7fb;
+$color-white: #ffffff;
+$color-text-primary: #111111;
+$color-text-muted: #666666;
+$color-border: #e8e8ec;
+
+// Accent
+$color-accent: #ffc72c;
+$color-accent-dark: #f5bb20;
+
+// Sidebar
+$color-sidebar-bg: #1c1c2e;
+
+// Status
+$color-onsite-bg: #d4f5e2;
+$color-onsite-text: #0d6e3a;
+$color-wfh-bg: #dbeafe;
+$color-wfh-text: #1d4ed8;
+$color-leave-bg: #ffedd5;
+$color-leave-text: #c2410c;
+$color-violation-bg: #fef3c7;
+$color-error-bg: #fef2f2;
+
+// ── Typography ───────────────────────────────────────────────────────────────
+$font-family:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
+$font-size-xs: 11px;
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 22px;
+
+// ── Spacing ──────────────────────────────────────────────────────────────────
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+// ── Radius ───────────────────────────────────────────────────────────────────
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 20px;

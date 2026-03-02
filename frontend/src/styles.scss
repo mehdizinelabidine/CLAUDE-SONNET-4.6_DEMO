@@ -1,0 +1,106 @@
+@use "styles/variables" as *;
+
+/* ── Reset & Base ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: $font-family;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  background: $color-bg;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* ── Badge utility classes ──────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: $font-size-xs;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  &--employee {
+    background: #f0f4ff;
+    color: #3730a3;
+  }
+
+  &--admin {
+    background: #fdf4ff;
+    color: #7e22ce;
+  }
+
+  &--onsite {
+    background: $color-onsite-bg;
+    color: $color-onsite-text;
+  }
+
+  &--wfh {
+    background: $color-wfh-bg;
+    color: $color-wfh-text;
+  }
+
+  &--leave {
+    background: $color-leave-bg;
+    color: $color-leave-text;
+  }
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d0d0d8;
+  border-radius: 3px;
+
+  &:hover {
+    background: #b0b0bb;
+  }
+}
+
+/* ── View transition ─────────────────────────────────────────────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.2s;
+}

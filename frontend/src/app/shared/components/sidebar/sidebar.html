@@ -1,0 +1,32 @@
+<aside class="sidebar">
+  <div class="sidebar__brand">
+    <span class="sidebar__logo">⏱</span>
+    <span class="sidebar__title">TimeSheet</span>
+  </div>
+
+  <nav class="sidebar__nav">
+    @for (item of visibleItems(); track item.path) {
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="sidebar__link--active"
+        class="sidebar__link"
+      >
+        <span class="sidebar__link-icon">{{ item.icon }}</span>
+        <span class="sidebar__link-label">{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar__footer">
+    @if (user(); as u) {
+      <div class="sidebar__user">
+        <div class="sidebar__avatar">{{ u.name[0] }}</div>
+        <div class="sidebar__user-info">
+          <span class="sidebar__user-name">{{ u.name }}</span>
+          <span class="sidebar__user-role">{{ u.role }}</span>
+        </div>
+      </div>
+    }
+    <button class="sidebar__logout" (click)="logout()">Sign out</button>
+  </div>
+</aside>

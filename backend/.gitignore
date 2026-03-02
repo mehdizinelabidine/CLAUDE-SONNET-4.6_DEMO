@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+.env.local
+
+# Data files (generated at runtime, seeded separately)
+data/*.json
+
+# Logs
+*.log
+
+# TypeScript incremental compilation
+*.tsbuildinfo

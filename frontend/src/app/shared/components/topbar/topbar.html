@@ -1,0 +1,20 @@
+<header class="topbar">
+  <div class="topbar__week-nav">
+    <button class="topbar__nav-btn" (click)="ts.previousWeek()" title="Previous week">‹</button>
+    <span class="topbar__week-label">{{ ts.weekLabel() }}</span>
+    <button class="topbar__nav-btn" (click)="ts.nextWeek()" title="Next week">›</button>
+    <button class="topbar__today-btn" (click)="ts.goToCurrentWeek()">Today</button>
+  </div>
+
+  <div class="topbar__right">
+    @if (user) {
+      <div class="topbar__profile">
+        <div class="topbar__avatar">{{ user.name[0] }}</div>
+        <div class="topbar__user-info">
+          <span class="topbar__user-name">{{ user.name }}</span>
+          <span class="topbar__user-role badge badge--{{ user.role }}">{{ user.role }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</header>

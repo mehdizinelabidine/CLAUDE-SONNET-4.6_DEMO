@@ -1,0 +1,60 @@
+<div class="history-page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">History</h1>
+      <p class="page-subtitle">Your timesheet records</p>
+    </div>
+
+    <div class="month-nav">
+      <button class="nav-btn" (click)="changeMonth(-1)">‹</button>
+      <span class="month-label">{{ selectedMonth() }}</span>
+      <button class="nav-btn" (click)="changeMonth(1)">›</button>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-card__value">{{ stats().total }}</span>
+      <span class="stat-card__label">Total Days</span>
+    </div>
+    <div class="stat-card stat-card--onsite">
+      <span class="stat-card__value">{{ stats().onsite }}</span>
+      <span class="stat-card__label">On-Site</span>
+    </div>
+    <div class="stat-card stat-card--wfh">
+      <span class="stat-card__value">{{ stats().wfh }}</span>
+      <span class="stat-card__label">WFH</span>
+    </div>
+    <div class="stat-card stat-card--leave">
+      <span class="stat-card__value">{{ stats().leave }}</span>
+      <span class="stat-card__label">Leave</span>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading">Loading history…</div>
+  } @else if (entries().length === 0) {
+    <div class="empty-state">No entries for this month.</div>
+  } @else {
+    @for (group of groupedEntries(); track group.weekLabel) {
+      <div class="week-group">
+        <h3 class="week-group__title">{{ group.weekLabel }}</h3>
+        <div class="entries-table">
+          <div class="entries-table__header">
+            <span>Date</span>
+            <span>Status</span>
+            <span>Submitted</span>
+          </div>
+          @for (entry of group.entries; track entry.id) {
+            <div class="entries-table__row">
+              <span class="entry-date">{{ entry.date }}</span>
+              <app-status-chip [status]="entry.status" />
+              <span class="entry-time">{{ entry.createdAt | slice:0:10 }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>

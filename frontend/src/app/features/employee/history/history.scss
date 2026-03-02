@@ -1,0 +1,147 @@
+.history-page {
+  max-width: 800px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e0e0e6;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+
+  &:hover { background: #f5f5f8; }
+}
+
+.month-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  min-width: 90px;
+  text-align: center;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: #f5f5f8;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+
+  &__value {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  &__label {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &--onsite { background: #d4f5e2; .stat-card__value { color: #0d6e3a; } }
+  &--wfh { background: #dbeafe; .stat-card__value { color: #1d4ed8; } }
+  &--leave { background: #ffedd5; .stat-card__value { color: #c2410c; } }
+}
+
+.week-group {
+  margin-bottom: 24px;
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.entries-table {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e8e8ec;
+  overflow: hidden;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px 16px;
+    background: #f7f7fb;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 12px 16px;
+    align-items: center;
+    border-top: 1px solid #f0f0f4;
+
+    &:hover { background: #fafafa; }
+  }
+}
+
+.entry-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+}
+
+.entry-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.loading, .empty-state {
+  text-align: center;
+  padding: 48px;
+  color: #666;
+  font-size: 14px;
+}

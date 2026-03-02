@@ -1,0 +1,37 @@
+{
+  "name": "timesheet-backend",
+  "version": "1.0.0",
+  "description": "Timesheet App - NestJS Backend",
+  "scripts": {
+    "build": "nest build",
+    "start": "node dist/main",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "seed": "ts-node src/seed/seed.ts"
+  },
+  "dependencies": {
+    "@clerk/backend": "^2.33.0",
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/platform-express": "^10.3.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "csv-stringify": "^6.4.6",
+    "date-fns": "^3.6.0",
+    "pdfkit": "^0.15.0",
+    "reflect-metadata": "^0.2.1",
+    "rxjs": "^7.8.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.3.0",
+    "@nestjs/schematics": "^10.1.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "@types/pdfkit": "^0.13.4",
+    "@types/uuid": "^9.0.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

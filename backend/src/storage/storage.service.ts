@@ -2,21 +2,37 @@ import { Injectable, OnModuleInit } from "@nestjs/common";
 import * as fs from "fs/promises";
 import * as path from "path";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+const IS_VERCEL = !!process.env.VERCEL;
+const SEED_DATA_DIR = path.join(process.cwd(), "data");
+const DATA_DIR = IS_VERCEL ? path.join("/tmp", "data") : SEED_DATA_DIR;
 
 @Injectable()
 export class StorageService implements OnModuleInit {
   async onModuleInit() {
     await this.ensureDataDir();
-    await this.ensureFile("users.json", []);
-    await this.ensureFile("timesheets.json", []);
-    await this.ensureFile("metrics.json", {
-      apiCalls: 0,
-      totalValidationMs: 0,
-      validationCount: 0,
-      submissionsPerWeek: {},
-      violationsPerWeek: {},
-    });
+
+    if (IS_VERCEL) {
+      // On Vercel, copy seed data from the read-only bundle to writable /tmp
+      await this.copySeedFileIfMissing("users.json", []);
+      await this.copySeedFileIfMissing("timesheets.json", []);
+      await this.copySeedFileIfMissing("metrics.json", {
+        apiCalls: 0,
+        totalValidationMs: 0,
+        validationCount: 0,
+        submissionsPerWeek: {},
+        violationsPerWeek: {},
+      });
+    } else {
+      await this.ensureFile("users.json", []);
+      await this.ensureFile("timesheets.json", []);
+      await this.ensureFile("metrics.json", {
+        apiCalls: 0,
+        totalValidationMs: 0,
+        validationCount: 0,
+        submissionsPerWeek: {},
+        violationsPerWeek: {},
+      });
+    }
   }
 
   private async ensureDataDir() {
@@ -24,6 +40,23 @@ export class StorageService implements OnModuleInit {
       await fs.mkdir(DATA_DIR, { recursive: true });
     } catch {
       // already exists
+    }
+  }
+
+  /** On Vercel: copy bundled seed file to /tmp if it doesn't already exist there */
+  private async copySeedFileIfMissing(filename: string, defaultValue: unknown) {
+    const dest = path.join(DATA_DIR, filename);
+    try {
+      await fs.access(dest);
+    } catch {
+      // File not in /tmp yet — try copying from bundled seed data
+      const src = path.join(SEED_DATA_DIR, filename);
+      try {
+        await fs.copyFile(src, dest);
+      } catch {
+        // Seed file not bundled; create with defaults
+        await fs.writeFile(dest, JSON.stringify(defaultValue, null, 2));
+      }
     }
   }
 

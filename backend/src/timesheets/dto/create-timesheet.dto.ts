@@ -1,4 +1,11 @@
-import { IsDateString, IsEnum, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsString,
+  IsArray,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 import { TimesheetStatus } from '../../shared/interfaces';
 
 export class CreateTimesheetDto {
@@ -12,12 +19,20 @@ export class CreateTimesheetDto {
   status: TimesheetStatus;
 }
 
+export class WeeklyEntryDto {
+  @IsDateString()
+  date: string;
+
+  @IsEnum(['onsite', 'wfh', 'leave'])
+  status: TimesheetStatus;
+}
+
 export class WeeklySubmitDto {
   @IsString()
   userId: string;
 
-  entries: Array<{
-    date: string;
-    status: TimesheetStatus;
-  }>;
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => WeeklyEntryDto)
+  entries: WeeklyEntryDto[];
 }
